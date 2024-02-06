@@ -64,4 +64,9 @@ export const getTotalCartPrice = (state) => {
   return state.cart.cart.reduce((sum, item) => sum + item.totalPrice, 0);
 };
 
+export const getCurrentQuantity = (id) => (state) => {
+  const item = state.cart.cart.find((item) => item.pizzaId === id);
+  return item ? item.quantity : 0;
+};
+
 // REDUX "RESELECT" LIBRARY
