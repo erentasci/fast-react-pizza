@@ -8,6 +8,7 @@ import {
   formatDate,
 } from '../../utils/helpers';
 import { useEffect } from 'react';
+import UpdateOrder from './UpdateOrder';
 
 function Order() {
   const order = useLoaderData();
@@ -34,23 +35,23 @@ function Order() {
   const deliveryIn = calcMinutesLeft(estimatedDelivery);
 
   return (
-    <div className="px-4 py-6 space-y-8">
+    <div className="space-y-8 px-4 py-6">
       <div className="flex flex-wrap items-center justify-between gap-2">
         <h2 className="text-xl font-semibold">Order #{id} status</h2>
 
         <div className="space-x-2">
           {priority && (
-            <span className="px-3 py-1 text-sm font-semibold tracking-wide uppercase bg-red-500 rounded-full text-red-50">
+            <span className="rounded-full bg-red-500 px-3 py-1 text-sm font-semibold uppercase tracking-wide text-red-50">
               Priority
             </span>
           )}
-          <span className="px-3 py-1 text-sm font-semibold tracking-wide uppercase bg-green-500 rounded-full text-green-50">
+          <span className="rounded-full bg-green-500 px-3 py-1 text-sm font-semibold uppercase tracking-wide text-green-50">
             {status} order
           </span>
         </div>
       </div>
 
-      <div className="flex flex-wrap items-center justify-between gap-2 px-6 py-5 bg-stone-200">
+      <div className="flex flex-wrap items-center justify-between gap-2 bg-stone-200 px-6 py-5">
         <p className="font-medium">
           {deliveryIn >= 0
             ? `Only ${calcMinutesLeft(estimatedDelivery)} minutes left 😃`
@@ -61,7 +62,7 @@ function Order() {
         </p>
       </div>
 
-      <ul className="border-t border-b divide-y dive-stone-200">
+      <ul className="dive-stone-200 divide-y border-b border-t">
         {cart.map((item) => (
           <OrderItem
             item={item}
@@ -75,7 +76,7 @@ function Order() {
         ))}
       </ul>
 
-      <div className="px-6 py-5 space-y-2 bg-stone-200">
+      <div className="space-y-2 bg-stone-200 px-6 py-5">
         <p className="text-sm font-medium text-stone-600">
           Price pizza: {formatCurrency(orderPrice)}
         </p>
@@ -88,6 +89,7 @@ function Order() {
           To pay on delivery: {formatCurrency(orderPrice + priorityPrice)}
         </p>
       </div>
+      {!priority && <UpdateOrder order={order} />}
     </div>
   );
 }
